@@ -1,0 +1,60 @@
+<html>
+<head>
+<title>Delete Posts</title>
+</head>
+<body>
+  Check the boxes of the things you want to delete:
+  <br>
+  <br>
+    <form action="DeletePost.php" method="post">
+  <table style="width:100%" border= "1"">
+    <tr>
+      <th>User</th>
+      <th>Post</th>
+      <th>Delete?</th>
+    </tr>
+
+
+  <?php
+  error_reporting(E_ALL);
+  ini_set("display_errors", 1);
+  $mysqli = new mysqli("mysql.eecs.ku.edu", "vicachevchenco", "password", "vicachevchenco");
+
+  /* check connection */
+  if ($mysqli->connect_errno) {
+      printf("Connect failed: %s\n", $mysqli->connect_error);
+     exit();
+     echo "error";
+  }
+
+  $query ="SELECT Users.UserID, Posts.Content
+            FROM Users
+            INNER JOIN Posts
+            ON Users.UserID=Posts.AuthorID";
+
+
+
+  if ($result = $mysqli->query($query)) {
+      /* fetch associative array */
+      while ($row = $result->fetch_assoc()) {
+        echo("<tr>");
+          echo("<td>");
+        echo ($row["UserID"]);
+        echo("</td>");
+        echo("<td>");
+        echo ($row["Content"]);
+        echo("</td>");
+        echo("<td>");
+        echo '<input type="checkbox" name="toDelete[]" id= "toDelete"value="' .$row["Content"]. '"><br>';
+        echo("</td>");
+        echo("</tr>");
+        }
+      }; ?>
+  </table>
+  <br>
+  <input type="submit"value="DELETE SELECTED POSTS"></input>
+  </form>
+
+  <br>
+</body>
+</html>
