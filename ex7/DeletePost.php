@@ -1,6 +1,4 @@
 <?php
-error_reporting(E_ALL);
-ini_set("display_errors", 1);
 $mysqli = new mysqli("mysql.eecs.ku.edu", "vicachevchenco", "password", "vicachevchenco");
 
 /* check connection */
@@ -10,6 +8,9 @@ if ($mysqli->connect_errno) {
    echo "error";
 }
 $chosen = $_POST["toDelete"];
+if(empty($chosen)){
+  echo("You did not select any posts to delete");
+}else {
 echo("DELETED: ");
 echo ("<br>");
 foreach ($chosen as $toDelete){
@@ -31,6 +32,6 @@ if ($result = $mysqli->query($query)) {
 
     }
 }
-
+}
 
  ?>
