@@ -1,0 +1,40 @@
+<html>
+<head>
+<title>View User Posts</title>
+</head>
+<body>
+  Select the User you want to view the Posts from:
+  <br>
+  <br>
+  <form action="ViewUserPosts.php" method="post">
+      <select name="selectedUser">
+
+    <?php
+    error_reporting(E_ALL);
+    ini_set("display_errors", 1);
+    $mysqli = new mysqli("mysql.eecs.ku.edu", "vicachevchenco", "password", "vicachevchenco");
+
+    /* check connection */
+    if ($mysqli->connect_errno) {
+        printf("Connect failed: %s\n", $mysqli->connect_error);
+       exit();
+       echo "error";
+    }
+
+    $query = "SELECT * FROM Users";
+    if ($result = $mysqli->query($query)) {
+        /* fetch associative array */
+        while ($row = $result->fetch_assoc()) {
+          echo '<option value="'.$row[UserID].'" name="theUser">'.$row[UserID].'</option>';
+          }
+        }; ?>
+
+</select>
+
+    <br>
+    <br>
+    <input type="submit" value="Make Selection"></input>
+  </form>
+  <br>
+</body>
+</html>
